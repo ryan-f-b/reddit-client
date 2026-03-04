@@ -1,32 +1,51 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Post from '../Post/Post.jsx';
 
-function PostList() {
-  const fakePosts = [
-    {
-      id: 1,
-      title: "Arsenal win 3-0",
-      votes: 15000,
-      image: "https://via.placeholder.com/400"
-    },
-    {
-      id: 2,
-      title: "Championship playoff drama",
-      votes: 10000,
-      image: "https://via.placeholder.com/400"
-    }
-];
+function PostList({ subreddit }) {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+
+    // Fetching the subreddit data with a call using string interpolation
+    fetch(`/reddit/r/${subreddit}/top.json?limit=10&t=day`)
+
+      // Awaiting response from the subreddit
+      .then(response => {
+        if (!response.ok) {
+
+          // Throwing an error if the response is not OK
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Return the response as a json object if the response is OK
+        return response.json();
+      })
+
+      // Updating relevant state using the json object
+      .then(data => {
+        setPosts(data.data.children);
+        setLoading(false);
+      })
+
+      // Catching and logging any errors to the console
+      .catch(err => {
+        console.error(err);
+        setError("Failed to load posts.");
+        setLoading(false);
+      });
+
+      // Ensureing a new fetch request is made each time the subreddit changes
+  }, [subreddit]);
+
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <>
-      {fakePosts.map(post => (
-        <Post
-          key={post.id}
-          title={post.title}
-          votes={post.votes}
-          image={post.image}
-        />
+      {posts.map(post => (
+        <Post key={post.data.id} post={post.data} />
       ))}
     </>
   )

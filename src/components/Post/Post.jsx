@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-
-function Post({ title, votes, image }) {
+function Post({ post }) {
 
   return (
     <>
-        <h3>{title}</h3>
-        <h5>{votes}</h5>
-        <img src={image} alt={title} />
+      <p>{post.ups}</p>
+      <h3>{post.title}</h3>
+      <p>Posted by u/{post.author}</p>
+      {post.thumbnail && post.thumbnail.startsWith("http") && (
+      <img src={post.thumbnail} alt={post.title} />
+      )}
     </>
   )
 }

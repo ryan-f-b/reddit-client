@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function SubredditSelector() {
-  
+function SubredditSelector({ setSubreddit }) {
   return (
     <>
-      <button>r/Soccer</button>
-      <button>r/Championship</button>
-      <button>r/TheOther14</button>
+      <button onClick={() => setSubreddit('soccer')}>r/Soccer</button>
+      <button onClick={() => setSubreddit('Championship')}>r/Championship</button>
+      <button onClick={() => setSubreddit('TheOther14')}>r/TheOther14</button>
     </>
   )
 }
