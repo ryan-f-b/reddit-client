@@ -1,14 +1,31 @@
+import styles from './Post.module.css';
+import arrow from './reddit-arrow.png'
+
 function Post({ post }) {
 
+  const image = post.preview?.images?.[0]?.source?.url?.replace(/&amp;/g, "&") || (post.thumbnail && post.thumbnail.startsWith("http") ? post.thumbnail : null);
+
+  const video = post.media?.reddit_video?.fallback_url;
+
   return (
-    <>
-      <p>{post.ups}</p>
+    <div className={styles.post}>
+      <div className={styles.postHeader}>
+        <div className={styles.votes}>
+          <img src={arrow} alt='upvote arrow' /> 
+          <p>{post.ups}</p>
+        </div>
+        <h5 className={styles.author}>Posted by u/{post.author}</h5>
+      </div>
       <h3>{post.title}</h3>
-      <p>Posted by u/{post.author}</p>
-      {post.thumbnail && post.thumbnail.startsWith("http") && (
-      <img src={post.thumbnail} alt={post.title} />
+      {post.selftext && (<p className={styles.postBody}>{post.selftext}</p>)}
+
+      {video && (
+        <video controls className={styles.video}>
+          <source src={video} type="video/mp4" />
+        </video>
       )}
-    </>
+      {image && (<img src={image} alt={post.title} />)}
+    </div>
   )
 }
 

@@ -1,0 +1,19 @@
+.subreddit-selector {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.subreddit-selector button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #690c22;
+  color: white;
+  cursor: pointer;
+}
+
+.subreddit-selector button:hover {
+  background-color: #e03d00;
+}

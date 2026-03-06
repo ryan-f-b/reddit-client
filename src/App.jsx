@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-      <h1>FootballReddit</h1>
+      <h1>Football<span>Reddit</span></h1>
       <SubredditSelector subreddit={subreddit} setSubreddit={setSubreddit}/>
       <PostList subreddit={subreddit}/>
     </>
