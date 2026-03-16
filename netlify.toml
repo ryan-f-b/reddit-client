@@ -3,3 +3,5 @@
   to = "https://www.reddit.com/:splat"
   status = 200
   force = true
+  [redirects.headers]
+    User-Agent = "web:my-soccer-app:v1.0 (by /u/YourUsernameHere)"
