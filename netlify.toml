@@ -4,4 +4,4 @@
   status = 200
   force = true
   [redirects.headers]
-    User-Agent = "web:my-soccer-app:v1.0 (by /u/YourUsernameHere)"
+    User-Agent = "web:my-soccer-app:v1.0 (by /u/steve-o)"
