@@ -8,37 +8,26 @@ function PostList({ subreddit }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch(
+          `https://api.allorigins.win/get?url=${encodeURIComponent(
+            `https://www.reddit.com/r/${subreddit}/top.json?limit=10&t=day`
+          )}`
+        );
 
-    // Fetching the subreddit data with a call using string interpolation
-    fetch(`/reddit/r/${subreddit}/top.json?limit=10&t=day`)
+        const proxyData = await response.json();
+        const data = JSON.parse(proxyData.contents);
 
-      // Awaiting response from the subreddit
-      .then(response => {
-        if (!response.ok) {
+        setPosts(data.data.children.map(post => post.data));
 
-          // Throwing an error if the response is not OK
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+      } catch (error) {
+        console.error(error);
+        setError(true);
+      }
+    };
 
-        // Return the response as a json object if the response is OK
-        return response.json();
-      })
-
-      // Updating relevant state using the json object
-      .then(data => {
-        console.log(data.data.children);
-        setPosts(data.data.children);
-        setLoading(false);
-      })
-
-      // Catching and logging any errors to the console
-      .catch(err => {
-        console.error(err);
-        setError("Failed to load posts.");
-        setLoading(false);
-      });
-
-      // Ensureing a new fetch request is made each time the subreddit changes
+    fetchPosts();
   }, [subreddit]);
 
   if (loading) return <p>Loading posts...</p>;
