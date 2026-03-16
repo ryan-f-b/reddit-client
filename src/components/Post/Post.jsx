@@ -25,6 +25,7 @@ function Post({ post }) {
         </video>
       )}
       {image && (<img src={image} alt={post.title} />)}
+      <h5 id={styles.id}>{post.num_comments} comments</h5>
     </div>
   )
 }
