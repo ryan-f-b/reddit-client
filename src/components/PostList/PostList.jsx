@@ -10,11 +10,7 @@ function PostList({ subreddit }) {
   useEffect(() => {
 
     // Fetching the subreddit data with a call using string interpolation
-    fetch(`https://www.reddit.com/r/${subreddit}/top.json?limit=10&t=day`, {
-      headers: {
-        'User-Agent': 'reddit-client'
-      }
-    })
+    fetch(`/reddit/r/${subreddit}/top.json?limit=10&t=day`)
 
       // Awaiting response from the subreddit
       .then(response => {
